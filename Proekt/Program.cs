@@ -520,9 +520,9 @@ public static class Program
     static void Main(string[] args)
     {
         var schoolService = new SchoolService();
-        string teacherJsonPath = @"C:\Jsonfile\teachers.json";
-        string specialistJsonPath = @"C:\Jsonfile\Specialists.json";
-        schoolService.LoadData(teacherJsonPath, specialistJsonPath);
+        //string teacherJsonPath = @"C:\Jsonfile\teachers.json";
+        //string specialistJsonPath = @"C:\Jsonfile\Specialists.json";
+        //schoolService.LoadData(teacherJsonPath, specialistJsonPath);
         bool exit = false;
         int selectedIndex = 0;
 
