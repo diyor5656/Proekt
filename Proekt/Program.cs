@@ -596,8 +596,8 @@ public static class Program
                         break;
                     case 6:
                         schoolService.GetTeachers(@"C:\Jsonfile\teachers.json");
-                        //schoolService.GetRooms();
-                        //schoolService.ListGroup();
+                        schoolService.GetRooms(@"C:\Jsonfile\rooms.json");
+                        schoolService.GetGroups(@"C:\Jsonfile\groups.json");
                         Console.Write("Enter Teacher Id: ");
                         var addtId = int.Parse(Console.ReadLine());
                         Console.Write("Enter Room Id: ");
