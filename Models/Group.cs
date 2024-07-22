@@ -16,5 +16,6 @@ namespace Models
         public int RoomID { get; set; }
         public Room Room { get; set; }
         public List<Booking> Grouplist { get; set; }
+        public List<Exam> ExamList { get; set; } = new List<Exam>();
     }
 }

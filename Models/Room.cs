@@ -13,7 +13,7 @@ namespace Models
         public int Count { get; set; }
         public int Number { get; set; }
         public List<Booking> Grouplist { get; set; } = new List<Booking>();
-       
+        public List<Exam> ExamList { get; set; } = new List<Exam>();
 
     }
 }

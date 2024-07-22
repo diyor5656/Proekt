@@ -1,4 +1,5 @@
 ﻿using Models;
+using System.Text.Json;
 
 namespace Proekt.Services
 {
@@ -8,9 +9,38 @@ namespace Proekt.Services
         private List<Specialist> specialists = new List<Specialist>();
         private List<Teacher> Teachers = new List<Teacher>();
         private List<Room> rooms = new List<Room>();
-           
+        private List<Group> groups = new List<Group>();
+        public List<Exam> ExamList { get; set; } = new List<Exam>();
+        public List<Teacher> GetTeachersFromFile(string jsonPath)
+        {
+            if (!File.Exists(jsonPath))
+            {
+                return new List<Teacher>();
+            }
+
+            string jsonFromFile = File.ReadAllText(jsonPath);
+            return string.IsNullOrEmpty(jsonFromFile) ? new List<Teacher>() : JsonSerializer.Deserialize<List<Teacher>>(jsonFromFile);
+        }
+
+        public List<Specialist> GetSpecialistsFromFile(string jsonPath)
+        {
+            if (!File.Exists(jsonPath))
+            {
+                return new List<Specialist>();
+            }
+
+            string jsonFromFile = File.ReadAllText(jsonPath);
+            return string.IsNullOrEmpty(jsonFromFile) ? new List<Specialist>() : JsonSerializer.Deserialize<List<Specialist>>(jsonFromFile);
+        }
+        public void LoadData(string teacherJsonPath, string specialistJsonPath)
+        {
+            teachers = GetTeachersFromFile(teacherJsonPath);
+            specialists = GetSpecialistsFromFile(specialistJsonPath);
+        }
+
         public void AttachSpecialistToTeacher(int teacherId, int specialistId)
         {
+
             var teacher = teachers.FirstOrDefault(t => t.Id == teacherId);
             var specialist = specialists.FirstOrDefault(s => s.Id == specialistId);
 
@@ -31,31 +61,7 @@ namespace Proekt.Services
             teacher.TeacherSpc.Add(teacherSpecialist);
             specialist.TeacherSpc.Add(teacherSpecialist);
         }
-        public void Booking(int teacherId, int roomId, int groupId)
-        {
-            var teacher = teachers.FirstOrDefault(t => t.Id == teacherId);
-            var room = rooms.FirstOrDefault(r =>r.Id == roomId);
-            var group = groups.FirstOrDefault(s => s.Id == groupId);
-            if (teacher == null || group == null || room == null)
-            {
-                Console.WriteLine("Invalid teacher or room or group ID.");
-                return;
-            }
-            var newgroup = new Booking
-            {
-                TeacherId = teacherId,
-                Teacher = teacher,
-                RoomId = roomId,
-                Room = room,
-                GroupId = groupId,
-                Group = group,
-
-            };
-
-            group.Grouplist.Add(newgroup);
-            room.Grouplist.Add(newgroup);
-            teacher.Grouplist.Add(newgroup);
-        }
+      
         public void Exam(int teacherId, int roomId, int groupId,string SatrtOn,string EndOn,string day)
         {
             var teacher = teachers.FirstOrDefault(t => t.Id == teacherId);
@@ -63,10 +69,10 @@ namespace Proekt.Services
             var group = groups.FirstOrDefault(s => s.Id == groupId);
             if (teacher == null || group == null || room == null)
             {
-                Console.WriteLine("Invalid teacher or group or room ID.");
+                Console.WriteLine("Error! ");
                 return;
             }
-            var newgroup = new Booking
+            var newgroup = new Exam
             {
                 TeacherId = teacherId,
                 Teacher = teacher,
@@ -77,15 +83,14 @@ namespace Proekt.Services
 
             };
 
-            group.Grouplist.Add(newgroup);
-            room.Grouplist.Add(newgroup);
-            teacher.Grouplist.Add(newgroup);
+            group.ExamList.Add(newgroup);
+            room.ExamList.Add(newgroup);
+            teacher.ExamList.Add(newgroup);
         }
-
-    
         public void GetList()
         {
             if (teachers.Count > 0)
+            {
                 foreach (var teacher in teachers)
                 {
                     Console.WriteLine($"Teacher: {teacher.Name}");
@@ -94,8 +99,11 @@ namespace Proekt.Services
                         Console.WriteLine($"  Specialist: {ts.Specialist.Name}, Stack: {ts.Specialist.Stack}");
                     }
                 }
+            }
             else
-                Console.WriteLine("Teacher lis is empty.");
+            {
+                Console.WriteLine("Teacher list is empty.");
+            }
         }
         public void GetBigList()
         {
