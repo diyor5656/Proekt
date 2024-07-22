@@ -153,6 +153,7 @@ public static class Program
                 Console.ResetColor();
             }
 
+
             var key = Console.ReadKey(true);
 
             if (key.Key == ConsoleKey.DownArrow)
