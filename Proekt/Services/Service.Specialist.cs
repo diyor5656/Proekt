@@ -115,7 +115,12 @@ namespace Proekt.Services
         public void SaveSpecialists(string jsonPath, List<Specialist> specialists)
         {
             string serialized = JsonSerializer.Serialize(specialists);
-            File.WriteAllText(jsonPath, serialized);
+           
+            if (!File.Exists(jsonPath))
+            {
+                File.WriteAllText(jsonPath, serialized);
+            }
+            
         }
 
     }

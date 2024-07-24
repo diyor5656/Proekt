@@ -9,9 +9,16 @@ namespace Proekt.Services
 {
     public partial class SchoolService
     {
-        public void AddTeacher(string jsonPath)
+        public static string GetTeacherPAth()
         {
-            List<Teacher> teachers = GetTeachers(jsonPath);
+            string currentPath = Directory.GetCurrentDirectory();
+            currentPath += @"\teachers.json";
+            return currentPath;
+        }
+        public void AddTeacher()
+        {
+            
+            List<Teacher> teachers = GetTeachers();
 
             Console.Write("Enter Teacher Name: ");
             string teacherName = Console.ReadLine();
@@ -25,14 +32,14 @@ namespace Proekt.Services
             };
 
             teachers.Add(newTeacher);
-            SaveTeachers(jsonPath, teachers);
+            SaveTeachers( teachers);
 
             Console.WriteLine("Teacher added successfully.");
         }
 
-        public void UpdateTeacher(string jsonPath)
+        public void UpdateTeacher()
         {
-            List<Teacher> teachers = GetTeachers(jsonPath);
+            List<Teacher> teachers = GetTeachers();
 
             Console.Write("Enter Teacher Id for update : ");
             int teacherId;
@@ -55,13 +62,13 @@ namespace Proekt.Services
                 teacherToUpdate.Name = newName;
             }
 
-            SaveTeachers(jsonPath, teachers);
+            SaveTeachers( teachers);
             Console.WriteLine("Teacher updated successfully.");
         }
 
-        public void DeleteTeacher(string jsonPath)
+        public void DeleteTeacher()
         {
-            List<Teacher> teachers = GetTeachers(jsonPath);
+            List<Teacher> teachers = GetTeachers();
 
             Console.Write("Enter Teacher Id to Delete: ");
             int teacherId;
@@ -78,19 +85,19 @@ namespace Proekt.Services
             }
 
             teachers.Remove(teacherToDelete);
-            SaveTeachers(jsonPath, teachers);
+            SaveTeachers( teachers);
 
             Console.WriteLine("Teacher deleted successfully.");
         }
 
-        public List<Teacher> GetTeachers(string jsonPath)
+        public List<Teacher> GetTeachers()
         {
-            if (!File.Exists(jsonPath))
+            if (!File.Exists(GetTeacherPAth()))
             {
                 return new List<Teacher>();
             }
 
-            string jsonFromFile = File.ReadAllText(jsonPath);
+            string jsonFromFile = File.ReadAllText(GetTeacherPAth());
             var teachers = string.IsNullOrEmpty(jsonFromFile) ? new List<Teacher>() : JsonSerializer.Deserialize<List<Teacher>>(jsonFromFile);
 
             Console.WriteLine("Teachers List:");
@@ -102,52 +109,19 @@ namespace Proekt.Services
             return teachers;
         }
 
-        public void SaveTeachers(string jsonPath, List<Teacher> teachers)
-        {
+        public void SaveTeachers(List<Teacher> teachers)
+        { 
             string serialized = JsonSerializer.Serialize(teachers);
-            File.WriteAllText(jsonPath, serialized);
+            
+            File.WriteAllText(GetTeacherPAth(), serialized);
         }
 
-        public void ClearFile(string jsonPath)
+        public void ClearFile()
         {
-            File.WriteAllText(jsonPath, string.Empty);
+            File.WriteAllText(GetTeacherPAth(), string.Empty);
             Console.WriteLine("File cleared successfully.");
         }
+       
     }
 }
-
-
-        //public void UpdateTeacher (int id, string? name)
-        //{
-        //    var teacher = teachers.FirstOrDefault(f => f.Id == id);
-        //    if (teacher != null)
-        //    {
-        //        teacher.Name = name;
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Teacher not Found!");
-        //    }
-        //}
-        //public void DeleteTeacher(int id)
-        //{
-        //    var teacher = teachers.FirstOrDefault(f => f.Id == id);
-        //    if (teacher != null)
-        //    {
-        //        teachers.Remove(teacher);
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Teacher Not Found!");
-        //    }
-        //}
-        //public void ListTeachers()
-        //{
-        //    foreach (var teacher in teachers)
-        //    {
-        //        Console.WriteLine($"TeacherId: {teacher.Id}, Name: {teacher.Name}");
-        //    }
-        //}
-//    }
-//}
 

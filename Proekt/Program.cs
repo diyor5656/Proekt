@@ -9,6 +9,8 @@ public static class Program
 
     static void Main(string[] args)
     {
+        
+
         var schoolService = new SchoolService();
         //string teacherJsonPath = @"C:\Jsonfile\teachers.json";
         //string specialistJsonPath = @"C:\Jsonfile\Specialists.json";
@@ -76,7 +78,7 @@ public static class Program
                         break;
                     case 5:
                         schoolService.GetSpecialists(@"C:\Jsonfile\Specialists.json");
-                        schoolService.GetTeachers(@"C:\Jsonfile\teachers.json");
+                        schoolService.GetTeachers();
                         Console.Write("Enter Teacher Id: ");
                         var attTId = int.Parse(Console.ReadLine());
                         Console.Write("Enter Specialist Id: ");
@@ -85,7 +87,7 @@ public static class Program
                         Console.WriteLine("Successfully added!");
                         break;
                     case 6:
-                        schoolService.GetTeachers(@"C:\Jsonfile\teachers.json");
+                        schoolService.GetTeachers();
                         schoolService.GetRooms(@"C:\Jsonfile\rooms.json");
                         schoolService.GetGroups(@"C:\Jsonfile\groups.json");
                         Console.Write("Enter Teacher Id: ");
@@ -111,7 +113,7 @@ public static class Program
                         break;
                     case 9:
                         exit = true;
-                        schoolService.ClearFile(@"C:\Jsonfile\teachers.json");
+                        schoolService.ClearFile();
                         break;
                     default:
                         Console.WriteLine("Error, please try again.");
@@ -181,7 +183,7 @@ public static class Program
                         schoolService.GetSpecialists(@"C:\Jsonfile\Specialists.json");
                         break;
                     case 4:
-                        schoolService.ClearFile(@"C:\Jsonfile\Specialists.json");
+                        schoolService.ClearFile();
                         break;
                     case 5:
                         exit = true;
@@ -243,19 +245,19 @@ public static class Program
                 switch (selectedIndex)
                 {
                     case 0:
-                        schoolService.AddTeacher(jsonPath);
+                        schoolService.AddTeacher();
                         break;
                     case 1:
-                        schoolService.GetTeachers(jsonPath);
+                        schoolService.GetTeachers();
                         break;
                     case 2:
-                        schoolService.UpdateTeacher(jsonPath);
+                        schoolService.UpdateTeacher();
                         break;
                     case 3:
-                        schoolService.DeleteTeacher(jsonPath);
+                        schoolService.DeleteTeacher();
                         break;
                     case 4:
-                        schoolService.ClearFile(jsonPath);
+                        schoolService.ClearFile();
                         break;
                     case 5:
                         exit = true;
@@ -329,7 +331,7 @@ public static class Program
                         schoolService.DeleteStudent(@"C:\Jsonfile\students.json");
                         break;
                     case 4:
-                        schoolService.ClearFile(jsonPath);
+                        schoolService.ClearFile();
                         break;
                     case 5:
                         exit = true;
@@ -403,7 +405,7 @@ public static class Program
                         schoolService.DeleteRoom(@"C:\Jsonfile\rooms.json");
                         break;
                     case 4:
-                        schoolService.ClearFile(@"C:\Jsonfile\rooms.json");
+                        schoolService.ClearFile();
                         break;
                     case 5:
                         exit = true;
@@ -477,7 +479,7 @@ public static class Program
                         schoolService.DeleteGroup(@"C:\Jsonfile\groups.json");
                         break;
                     case 4:
-                        schoolService.ClearFile(@"C:\Jsonfile\groups.json");
+                        schoolService.ClearFile();
                         break;
                     case 5:
                         exit = true;
